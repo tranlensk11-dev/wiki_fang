@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wiki Vtuber: Fang (F24-6)</title>
+    <style>
+        :root {
+            --bg-body: #121212;
+            --bg-panel: #1e1e24;
+            --bg-item: #2a2a35;
+            --text-main: #e0e0e0;
+            --text-muted: #9e9e9e;
+            --accent-pink: #ff7eb3;
+            --accent-blue: #58a6ff;
+            --border-color: #333344;
+            --shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .wiki-layout {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-card {
+            background-color: var(--bg-panel);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--accent-pink);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: auto;
+            min-height: 300px;
+            background-color: var(--bg-item);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .profile-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-header h1 {
+            color: var(--accent-pink);
+            font-size: 1.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .profile-header .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .info-table {
+            padding: 20px;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: var(--text-muted);
+            width: 110px;
+            flex-shrink: 0;
+        }
+
+        .info-value {
+            color: var(--text-main);
+        }
+
+        .links-card {
+            background-color: var(--bg-panel);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .links-card h2 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: var(--accent-pink);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .link-icon {
+            width: 28px;
+            height: 28px;
+            background-color: var(--bg-item);
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            font-size: 1em;
+            flex-shrink: 0;
+        }
+
+        .link-url {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.9em;
+            word-break: break-all;
+        }
+
+        .link-url:hover {
+            text-decoration: underline;
+        }
+
+        .main-content {
+            background-color: var(--bg-panel);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .quote-box {
+            background: linear-gradient(90deg, rgba(255, 126, 179, 0.15) 0%, rgba(30, 30, 36, 0) 100%);
+            border-left: 4px solid var(--accent-pink);
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.1em;
+            font-style: italic;
+            color: var(--accent-pink);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: var(--text-main);
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "❖";
+            color: var(--accent-pink);
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+
+        .main-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+            color: var(--text-main);
+        }
+
+        .main-content ul {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .main-content li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .main-content li::before {
+            content: "🌸";
+            position: absolute;
+            left: 0;
+            font-size: 0.8em;
+            top: 4px;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tag {
+            background-color: var(--bg-item);
+            color: var(--accent-pink);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+        }
+
+        .voice-container {
+            margin-bottom: 25px;
+        }
+
+        .voice-btn {
+            background-color: var(--bg-item);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .voice-btn:hover {
+            background-color: var(--accent-pink);
+            color: white;
+            border-color: var(--accent-pink);
+        }
+
+        .other-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            background-color: var(--bg-item);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .other-info-item {
+            display: flex;
+            align-items: flex-start;
+            color: var(--text-muted);
+            font-size: 0.95em;
+        }
+
+        .other-info-item span.icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+            margin-top: 2px;
+        }
+
+        .other-info-item div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .other-info-item .highlight {
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .split-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85em;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .footer .author {
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: var(--text-main);
+        }
+
+        .footer .author strong {
+            color: var(--accent-pink);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 900px) {
+            .wiki-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+            .main-content {
+                padding: 25px;
+            }
+            .split-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wiki-layout">
+        
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="fang_model.png" alt="Hình ảnh Vtuber Fang">
+                </div>
+                <div class="profile-header">
+                    <h1>Fang</h1>
+                    <div class="subtitle">Mã kí hiệu: F24-6</div>
+                </div>
+                <div class="info-table">
+                    <div class="info-row">
+                        <span class="info-label">Giới tính:</span>
+                        <span class="info-value">Nữ</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Tuổi:</span>
+                        <span class="info-value">12</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Chiều cao:</span>
+                        <span class="info-value">1m38</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nơi ở:</span>
+                        <span class="info-value">Thế giới giấc mơ</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Vũ khí:</span>
+                        <span class="info-value">Rìu màu hồng</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Phân loại:</span>
+                        <span class="info-value">Người nhân tạo</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="links-card">
+                <h2>Đường liên kết</h2>
+                <div class="link-item">
+                    <div class="link-icon">🎵</div>
+                    <a href="https://tiktok.com/@fang.lan06" class="link-url" target="_blank">tiktok.com/@fang.lan06</a>
+                </div>
+                <div class="link-item">
+                    <div class="link-icon">💬</div>
+                    <a href="https://discord.gg/DrnunQNzub" class="link-url" target="_blank">discord.gg/DrnunQNzub</a>
+                </div>
+                <div class="link-item">
+                    <div class="link-icon">🌐</div>
+                    <a href="https://www.youtube.com/@Fang.lan06" class="link-url" target="_blank">youtube.com/@Fang.lan06</a>
+                </div>
+                <div class="link-item">
+                    <div class="link-icon">📘</div>
+                    <a href="https://facebook.com/share/1Mu3vAVXYw" class="link-url" target="_blank">facebook.com/share/...</a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="quote-box">
+                "Ak, Fang chỉ nghe lệnh 1 ng, ng đó là 'Mẹ', dù có phải giết thân ik nx Fang cũng luôn thực hiện nếu đó là lệnh từ 'Mẹ'."
+            </div>
+
+            <h2 class="section-title">Tiểu Sử & Bối Cảnh</h2>
+            <p>Fang là một <strong>người nhân tạo</strong>, được tạo ra với mục đích phục vụ chiến đấu. Tuy nhiên, vì là một sinh vật nhân tạo nên cô bị thiếu hụt cảm xúc. Bản chất cô là một cỗ máy chiến đấu nhưng lại mang vẻ ngoài của một đứa trẻ.</p>
+            <p>Do là một mô thử nghiệm, Fang có ngoại hình giống hệt một con người. Mặc dù mang danh nghĩa là "vũ khí", nhưng có một người (được Fang gọi là <strong>"Mẹ"</strong>) đã nhận cô về. Người này đã cho Fang một cơ thể giống con người và đối xử, yêu thương cô như một đứa con thực sự.</p>
+
+            <h2 class="section-title">Giọng Nói (Voice)</h2>
+            <div class="voice-container">
+                <button class="voice-btn" onclick="playAudio('voice_fang.mp3')">
+                    🔊 Phát câu nói kinh điển
+                </button>
+            </div>
+
+            <h2 class="section-title">Tính Cách</h2>
+            <ul>
+                <li><strong>Thiếu hụt cảm xúc:</strong> Do là người nhân tạo, Fang gặp khó khăn trong việc thể hiện cảm xúc tự nhiên.</li>
+                <li><strong>Trung thành tuyệt đối:</strong> Cô đặt sự phục tùng lên hàng đầu đối với "Mẹ" - người đã cứu lấy mình.</li>
+                <li><strong>Sẵn sàng chiến đấu:</strong> Dù ngoại hình nhỏ nhắn, nhưng Fang không ngần ngại ra tay, thậm chí là chống lại người thân nếu đó là mệnh lệnh từ "Mẹ".</li>
+            </ul>
+
+            <h2 class="section-title">Hashtag Chính Thức</h2>
+            <div class="tag-container">
+                <a href="#" class="tag">#FangVtuber</a>
+                <a href="#" class="tag">#FangF24</a>
+                <a href="#" class="tag">#FangLive</a>
+            </div>
+
+            <h2 class="section-title">Ngoại Hình</h2>
+            <ul>
+                <li><strong>Tóc:</strong> Tóc dài màu hồng phấn, có điểm xuyết các lọn tóc màu xanh nhạt ở hai bên.</li>
+                <li><strong>Trang phục:</strong> Mặc váy đen hầm hố với các chi tiết dây đai, phụ kiện màu hồng và trắng.</li>
+                <li><strong>Điểm nhấn:</strong> Đeo băng đô có phụ kiện hình tai động vật, cầm theo cây rìu màu hồng to bản.</li>
+            </ul>
+
+            <h2 class="section-title">Thông tin khác</h2>
+            <div class="other-info-grid">
+                
+                <div class="other-info-item">
+                    <span class="icon">👥</span>
+                    <div>
+                        <span class="highlight">4,25 N người đăng ký</span>
+                        <span>343 video</span>
+                    </div>
+                </div>
+
+                <div class="other-info-item">
+                    <span class="icon">📈</span>
+                    <div>
+                        <span class="highlight">1.528.980</span>
+                        <span>lượt xem</span>
+                    </div>
+                </div>
+
+                <div class="other-info-item">
+                    <span class="icon">📅</span>
+                    <div>
+                        <span class="highlight">16 thg 4, 2025</span>
+                        <span>Ngày tham gia</span>
+                    </div>
+                </div>
+
+                <div class="other-info-item split-row" style="grid-column: 1 / -1;">
+                    <div style="display: flex; align-items: flex-start;">
+                        <span class="icon">📖</span>
+                        <a href="https://mangatooncom.vn/contribute/index" class="link-url" target="_blank">Mangatoon</a>
+                    </div>
+                    
+                    <div style="display: flex; align-items: flex-start;">
+                        <span class="icon">💸</span>
+                        <a href="https://ganknow.com/fanglan" class="link-url" target="_blank" style="font-weight: bold;">Donate cho Fang</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer">
+                <strong>Nguồn thông tin:</strong><br>
+                Tiểu sử & Tính cách: Trích xuất từ tin nhắn của tài khoản Discord <strong>Nha Nguyệt</strong>.<br>
+                Đường liên kết & Thông tin khác: Tổng hợp từ hồ sơ kênh YouTube và mạng xã hội.
+                
+                <div class="author">
+                    Wiki được làm bởi <strong>Sonu</strong>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function playAudio(audioUrl) {
+            if (audioUrl === 'voice_fang.mp3') {
+                alert("Bạn chưa thêm file âm thanh thật!\nHãy đặt file 'voice_fang.mp3' cùng thư mục với file HTML này, hoặc sửa lại tên file trong code.");
+                return;
+            }
+            
+            const audio = new Audio(audioUrl);
+            audio.play().catch(e => console.log("Lỗi phát audio:", e));
+        }
+    </script>
+</body>
+</html>
